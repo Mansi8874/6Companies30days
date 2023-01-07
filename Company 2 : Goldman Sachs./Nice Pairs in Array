@@ -1,0 +1,25 @@
+class Solution {
+    public int countNicePairs(int[] nums) {
+        int mod=(int)Math.pow(10,9)+7;
+        int pair=0;
+        HashMap<Long,Integer> map=new HashMap<>();
+        for(int i=0;i<nums.length;i++){
+            long diff=nums[i]-rev(nums[i]);
+            if(map.containsKey(diff)){
+                pair=(pair%mod+map.get(diff)%mod)%mod;
+                map.put(diff,map.get(diff)+1);
+            }else{
+                map.put(diff,1);
+            }
+        }
+        return pair;
+    }
+    public long rev(int x){
+        long out=0;
+        while(x!=0){
+            out=out*10+x%10;
+            x=x/10;
+        }
+        return out;
+    }
+}
