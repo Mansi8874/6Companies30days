@@ -1,0 +1,35 @@
+class Solution {
+    public int findTheWinner(int n, int k) {
+        Node newNode=new Node(1);
+        Node prevNode=newNode;
+        for(int i=2;i<=n;i++){
+            Node currNode=new Node(i);
+            currNode.prev=prevNode;
+            prevNode.next=currNode;
+            prevNode=currNode;
+        }
+        prevNode.next=newNode;
+        newNode.prev=prevNode;
+        
+        Node currNode=prevNode;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<k;j++){
+                currNode=currNode.next;
+            }
+            currNode.loose();
+        }
+        return currNode.next.num;
+    }
+}
+class Node{
+    final int num;
+    Node prev=null;
+    Node next=null;
+    public Node(int num){
+        this.num=num;
+    }
+    public void loose(){
+        prev.next=next;
+        next.prev=prev;
+    }
+}
